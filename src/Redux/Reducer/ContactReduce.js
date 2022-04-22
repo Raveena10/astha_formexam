@@ -31,7 +31,18 @@ export const ContactReducer = (state = initialstate, action) => {
         };
 
       }
-    
+    case "DELETE_CONTACT":
+      {
+        console.log("deleteReducer", action)
+        console.log("deletestate", state)
+        return {
+          ...state,
+          contacts: state.contacts.filter(
+            (contact) => contact.id != action.payload
+          ),
+        };
+
+      }
     case "GET_CONTACT":
       {
         console.log("getconatct", action.payload);
@@ -51,6 +62,7 @@ export const ContactReducer = (state = initialstate, action) => {
         };
 
       }
+
       case "UPDATE_CONTACT": {
         console.log(action.payload);
         console.log("mmm",state.contacts);
@@ -61,7 +73,6 @@ export const ContactReducer = (state = initialstate, action) => {
           ),
         };
       }
-      
     default:
       return state;
 

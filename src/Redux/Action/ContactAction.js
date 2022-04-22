@@ -21,3 +21,12 @@ export const getContact = (getdata) => (
         
         }
     );
+    export const DeleteContact = (deletedata) => (
+        console.log("DeleteContactAction", deletedata),
+        {
+            type: "DELETE_CONTACT",
+            payload: deletedata,
+        
+        }
+    );
+    

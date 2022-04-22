@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-// import { DeleteContact } from '../../Redux/Action/ContactAction';
+import { DeleteContact } from '../../Redux/Action/ContactAction';
 
 export default function ShowContact() {
   let history = useHistory();
@@ -45,7 +45,7 @@ export default function ShowContact() {
 
                     <button
                       type="button"
-                    //  onClick={() => dispatch(DeleteContact(contacts.id))}
+                     onClick={() => dispatch(DeleteContact(contacts.id))}
                       // onClick={deleteda}
                       className="btn btn-sm btn-danger mx-3"
                     >
