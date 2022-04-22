@@ -31,19 +31,7 @@ export const ContactReducer = (state = initialstate, action) => {
         };
 
       }
-    case "DELETE_CONTACT":
-      {
-        console.log("deleteReducer", action)
-        console.log("deletestate", state)
-        return {
-          ...state,
-          contacts: state.contacts.filter(
-            (contact) => contact.id != action.payload
-          ),
-        };
-
-      }
-    case "GET_CONTACT":
+      case "GET_CONTACT":
       {
         console.log("getconatct", action.payload);
         let arr = state.contacts.filter(
@@ -62,17 +50,33 @@ export const ContactReducer = (state = initialstate, action) => {
         };
 
       }
-
       case "UPDATE_CONTACT": {
         console.log(action.payload);
-        console.log("mmm",state.contacts);
+        console.log("mmm",state.contact);
         return {
           ...state,
           contacts: state.contacts.map((contact) =>
           contact.id == action.payload.id ? action.payload : contact
           ),
-        };
+        };  
+        
+
       }
+    case "DELETE_CONTACT":
+      {
+        console.log("deleteReducer", action)
+        console.log("deletestate", state)
+        return {
+          ...state,
+          contacts: state.contacts.filter(
+            (contact) => contact.id != action.payload
+          ),
+        };
+
+      }
+    
+
+     
     default:
       return state;
 

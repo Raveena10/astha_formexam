@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {  useHistory,useParams } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import { AddContact } from "../../Redux/Action/ContactAction";
@@ -36,6 +36,7 @@ function ContactForm() {
         DebitCardNumber:DebitCardNumber,
         Gender:Gender
        }
+       console.log("data come")
        dispatch(updateContact(formdata));
        history.push("/ShowContact");
      }
@@ -47,7 +48,22 @@ function ContactForm() {
        history.push("/ShowContact");
      }
    }
+   useEffect(() => {
+    if (id) {
+      dispatch(getContact(id));
+    }
+  }, [id]);
 
+  useEffect(() => {
+    console.log("getcontactSelector", getcontactSelector);
+    if (getcontactSelector != null) {
+      setName(getcontactSelector.Name)
+      setMobileNumber(getcontactSelector.MobileNumber)
+      setDebitCardNumber(getcontactSelector.DebitCardNumber)
+      setGender(getcontactSelector.Gender)
+
+    }
+  }, [getcontactSelector]);
   
   return (
     <>
@@ -61,6 +77,7 @@ function ContactForm() {
         id="Name"
         className="form-control"
         aria-describedby="passwordHelpInline"
+        value={Name}
         onChange={(e) => setName(e.target.value)}
       />
 
@@ -74,6 +91,7 @@ function ContactForm() {
         id="Mobile Number"
         className="form-control"
         aria-describedby="passwordHelpInline"
+        value={MobileNumber}
         onChange={(e) => setMobileNumber(e.target.value)}
       />
 
@@ -83,11 +101,12 @@ function ContactForm() {
     <label htmlFor="inputPassword6" className="col-form-label">
         Debit Card Number
       </label>
-      <input
+      <input  
         type="number"
         id="DebitNumber"
         className="form-control"
         aria-describedby="passwordHelpInline"
+        value={DebitCardNumber}
         onChange={(e) => setDebitCardNumber(e.target.value)}
       />
 
@@ -102,6 +121,7 @@ function ContactForm() {
         id="gender"
         className="form-control"
         aria-describedby="passwordHelpInline"
+        value={Gender}
         onChange={(e) => setGender(e.target.value)}
       />
 
@@ -111,7 +131,7 @@ function ContactForm() {
 
     <br></br>
     <button className="btn btn-primary" type="submit"
-     onClick={submitHandler}>Submit</button>
+     onClick={submitHandler}>{id ? "Update Contact" : "Add Contact"}</button>
     </div>
   </>
   );
