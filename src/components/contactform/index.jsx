@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import {  useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {  useHistory,useParams } from "react-router-dom";
+import { useDispatch,useSelector } from "react-redux";
 import { AddContact } from "../../Redux/Action/ContactAction";
+import { getContact,updateContact } from '../../Redux/Action/ContactAction';
+
+import shortid from "shortid";
 
 function ContactForm() {
+  let { id } = useParams();
+  console.log("id", id);
     let history = useHistory();
     const dispatch = useDispatch();
 
@@ -11,18 +16,39 @@ function ContactForm() {
     const [MobileNumber, setMobileNumber] = useState("");
     const [DebitCardNumber, setDebitCardNumber] = useState("");
     const [Gender, setGender] = useState("");
+    const getcontactSelector = useSelector((state) => state.contacts.contact)
+    console.log("getcontactSelector", getcontactSelector);
 
-    const submitHandler=()=>{
-        const formdata={
-            Name:Name,
-            MobileNumber:MobileNumber,
-            DebitCardNumber:DebitCardNumber,
-            Gender:Gender
-        }
-        dispatch(AddContact(formdata));
-        console.log("form data" + JSON.stringify(formdata))
-        history.push("/show")
-    }
+    const submitHandler = (e) => {
+      e.preventDefault()
+ 
+     const formdata = {
+       id: shortid.generate(),
+       Name:Name,
+       MobileNumber:MobileNumber,
+       DebitCardNumber:DebitCardNumber,
+       Gender:Gender
+     }
+     if (id) {
+       const formdata = {
+        Name:Name,
+        MobileNumber:MobileNumber,
+        DebitCardNumber:DebitCardNumber,
+        Gender:Gender
+       }
+       dispatch(updateContact(formdata));
+       history.push("/ShowContact");
+     }
+ 
+     else {
+       dispatch(getContact(""));
+       dispatch(AddContact(formdata));
+       console.log("formdata" + JSON.stringify(formdata));
+       history.push("/ShowContact");
+     }
+   }
+
+  
   return (
     <>
     <div className="container">
